@@ -10,7 +10,7 @@ const baseUrl = 'https://api.banhji.com/payment/v1/bills/'
 app.get('/bills/:billId', async (req, res) => {
     const id = req.params.billId
     const appid = req.headers.appid
-    // console.log(req)
+    console.log('start end')
     const params = {
         url: `${baseUrl}${id}`,
         method: 'get',
