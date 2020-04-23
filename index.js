@@ -7,15 +7,15 @@ app.use(bodyParser.json())
 const port = 80
 const baseUrl = 'https://api.banhji.com/payment/v1/bills/'
 
-app.get('/bills/:billId', async (req, res) => {
-    const id = req.params.billId
-    const appid = req.headers.appid
+app.get('/bills/:billpk', async (req, res) => {
+    const pk = req.params.billpk
+    const apppk = req.headers.apppk
     console.log('start end')
     const params = {
-        url: `${baseUrl}${id}`,
+        url: `${baseUrl}${pk}`,
         method: 'get',
         headers: {
-            'appid': appid
+            'appid': apppk
         }
     }
     try {
@@ -26,17 +26,35 @@ app.get('/bills/:billId', async (req, res) => {
     }
 })
 
-app.post('/bills/:billId/payment', async (req, res) => {
-    const id = req.params.billId
-    const appid = req.headers.appid
+app.post('/bills/:billpk/payment', async (req, res) => {
+    const pk = req.params.billpk
+    const apppk = req.headers.apppk
     const params = {
-        url: `${baseUrl}${id}/payment`,
+        url: `${baseUrl}${pk}/payment`,
         method: 'post',
         headers: {
-            'appid': appid
+            'appid': apppk
         },
         data: {
             data: req.body
+        }
+    }
+    try {
+        const result = await axios(params)
+        res.json(result.data)
+    } catch (e) {
+        res.json(e)
+    }
+})
+
+app.get('/transactions/:id', async (req, res) => {
+    const pk = req.params.id
+    const apppk = req.headers.apppk
+    const params = {
+        url: `https://api.banhji.com/v1-agent/transactions/${pk}`,
+        method: 'get',
+        headers: {
+            'appid': apppk
         }
     }
     try {
