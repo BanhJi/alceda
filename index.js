@@ -10,6 +10,7 @@ const baseUrl = 'https://api.banhji.com/payment/v1/bills/'
 app.get('/bills/:billpk', async (req, res) => {
     const pk = req.params.billpk
     const apid = req.headers.appid
+    let apiRes = null
     const params = {
         url: `${baseUrl}${pk}`,
         method: 'get',
@@ -21,9 +22,9 @@ app.get('/bills/:billpk', async (req, res) => {
         const result = await axios(params)
         res.json(result.data)
     } catch (e) {
-        console.dir(e.response.data)
-        res.status(404)
-        res.json(e.response.data)
+        if (e.response.status > 200) {
+            res.json(e.response.data)  
+        } 
     }
 })
 
