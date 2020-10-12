@@ -20,11 +20,11 @@ app.get('/bills/:billpk', async (req, res) => {
     }
     try {
         const result = await axios(params)
+        res.status(result.status)
         res.json(result.data)
     } catch (e) {
-        if (e.response.status > 200) {
-            res.json(e.response.data)  
-        } 
+        res.status(e.response.status)
+        res.json(e.response.data)
     }
 })
 
