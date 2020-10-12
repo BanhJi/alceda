@@ -21,7 +21,9 @@ app.get('/bills/:billpk', async (req, res) => {
         const result = await axios(params)
         res.json(result.data)
     } catch (e) {
-        res.json(e.stack)
+        console.dir(e.response.data)
+        res.status(404)
+        res.json(e.response.data)
     }
 })
 
@@ -34,10 +36,9 @@ app.post('/bills/:billpk/payment', async (req, res) => {
         headers: {
             'appid': appid
         },
-        data: {
-            data: req.body
-        }
+        data: req.body
     }
+
     try {
         const result = await axios(params)
         res.json(result.data)
