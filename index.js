@@ -79,7 +79,7 @@ app.get('/transactions/:id', async (req, res) => {
     }
 })
 
-const httpsServer = https.createServer(credentials)
+const httpsServer = https.createServer(credentials, app)
 httpsServer.listen(port, () => {
     console.log('server is running on 443')
 })
